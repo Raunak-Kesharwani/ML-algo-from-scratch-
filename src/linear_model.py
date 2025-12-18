@@ -1,7 +1,7 @@
 import numpy as np 
 
 # Linear Regression using OLS 
-class linearRegression :
+class LinearRegression_OLS :
 
     def __init__(self):
         self.coef_ = None 
