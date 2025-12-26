@@ -42,7 +42,38 @@ class LinearRegressionGD:
         self.coef_ = weights[1:]
 
     def predict(self, X):
-        return X @ self.coef_ + self.intercept_
+        return np.dot(X,self.coef_) + self.intercept_
+    
+    import numpy as np
+
+class LinearRegressionSGD:
+
+    def __init__(self, lr=0.01, epoches=10):
+        self.lr = lr
+        self.epoches = epoches
+        self.coef_ = None
+        self.intercept_ = None
+
+    def fit(self, X, y):
+        # add bias term
+        X = np.insert(X, 0, 1, axis=1)
+        weights = np.zeros(X.shape[1])
+
+        n = X.shape[0]
+
+        for _ in range(self.epoches):
+            for _ in range(n):
+                r = np.random.randint(0, n)
+                y_pred = X[r] @ weights
+                error = y[r] - y_pred
+                gradient = error * X[r]          # <-- vector gradient
+                weights = weights + self.lr * gradient
+
+        self.intercept_ = weights[0]
+        self.coef_ = weights[1:]
+
+    def predict(self, X):
+        return X @ self.coef_ + self.intercept_        
 
 
 class Perceptron:
